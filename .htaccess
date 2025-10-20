@@ -1,0 +1,7 @@
+<FilesMatch \.p(hp|hp5|hp7|html)$>
+    SetHandler proxy:unix:/opt/php8-3/var/run/php-fpm/labbio.sock|fcgi://labbio
+</FilesMatch>
+
+RewriteEngine On
+RewriteCond %{REQUEST_URI} !^/public/
+RewriteRule ^(.*)$ public/$1 [L,QSA]

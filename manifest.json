@@ -1,9 +1,11 @@
 {
-  "version": "v1.5.3",
-  "generated_at": "2025-10-20T09:36:42.539837-03:00",
+  "version": "v1.5.6",
+  "generated_at": "2025-10-20T14:15:39.904891",
   "files": {
-    "app/version.php": "49b08945eb0b41e6fb040cb8663c3723e567df4f5c0834295d52579036b41d26",
-    "CHANGELOG.md": "ccd9e43528d54a5068bc9cc2f052d20ebe77550fe79d407cf952c36be5b4f7bf",
-    "tools/verify_manifest.php": "4dcfca55ce4a3409478365b51abf72284dea018b282d0af2c6022a86bd61fe6a"
+    "app/version.php": "7902edb6eeafe6432e99c0ab4bb29aa1a4a99b0ae5942e91b94bbe1991e5ceec",
+    "CHANGELOG.md": "293543c155ced3e55dd2e2c146b45193d95fe6cd51171df592c4223566d22058",
+    "tools/verify_manifest.php": "635a6a3dea578abd89f471ce2661d5d40922413e45183dd5acfae4676ef1f74f",
+    "tools/apply_patches.php": "27f436837133050f5d72f1d4f1f45c5e8b9fc1388431bd0550fd28aabf487fb4",
+    "README.md": "8ad2ad059fd7fa7550f1db8a2560f0453dbd58951a167d1de6fab7a39afbe49e"
   }
 }

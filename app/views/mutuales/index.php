@@ -13,6 +13,17 @@
   <?php endif; ?>
 </div>
 
+<div class="mt-2">
+  <form class="mb-3" method="get" action="<?= $appUrl ?>/mutuales">
+    <div class="input-group">
+      <input class="form-control" type="text" name="q"
+       value="<?= htmlspecialchars($q ?? ($_GET['q'] ?? ''), ENT_QUOTES, 'UTF-8') ?>"
+       placeholder="Buscar por nombre">
+      <button class="btn btn-outline-secondary">Buscar</button>
+    </div>
+  </form>
+</div>
+
 <table class="table table-sm table-striped mt-3 align-middle">
   <thead>
     <tr>

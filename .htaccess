@@ -3,5 +3,14 @@
 </FilesMatch>
 
 RewriteEngine On
+
+# Excluir carpeta tools del rewrite
+RewriteCond %{REQUEST_URI} ^/tools/
+RewriteRule ^ - [L]
+
+
 RewriteCond %{REQUEST_URI} !^/public/
 RewriteRule ^(.*)$ public/$1 [L,QSA]
+
+
+

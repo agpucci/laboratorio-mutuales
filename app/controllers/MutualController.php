@@ -42,10 +42,38 @@ class MutualController extends Controller{
         ];
     }
 
-    public function index(){
-        $mutuales=\Models\Mutual::all();
-        $this->view('mutuales/index',['mutuales'=>$mutuales,'title'=>'Mutuales']);
+    public function index() {
+
+        // --- BUSCADOR POR NOMBRE (sin tocar modelo/DB) ---
+        $q = isset($_GET['q']) ? trim($_GET['q']) : '';
+        if (function_exists('mb_strlen') && mb_strlen($q) > 100) {
+            $q = mb_substr($q, 0, 100);
+        } elseif (strlen($q) > 100) {
+            $q = substr($q, 0, 100);
+        }
+
+        // 1) Traemos el listado como siempre (lo que ya te funcionaba)
+        $mutuales = \Models\Mutual::all();
+
+        // 2) Si hay búsqueda, filtramos en memoria (sin tocar SQL)
+        if ($q !== '' && is_array($mutuales)) {
+            $needle = mb_strtolower($q);
+            $mutuales = array_values(array_filter($mutuales, function($m) use ($needle) {
+                // Probamos con 'name' y también con 'nombre' por si tu columna se llama distinto
+                $campo = $m['name'] ?? ($m['nombre'] ?? '');
+                if (!is_string($campo) || $campo === '') return false;
+                return mb_stripos($campo, $needle) !== false; // case-insensitive
+            }));
+        }
+
+        $this->view('mutuales/index', [
+            'mutuales' => $mutuales,
+            'title'    => 'Mutuales',
+            'q'        => $q,
+        ]);
     }
+
+
     public function recent(){
         $mutuales=\Models\Mutual::recentUpdated(10);
         $this->view('mutuales/recent',['mutuales'=>$mutuales,'title'=>'Últimas modificadas']);

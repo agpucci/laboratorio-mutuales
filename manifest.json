@@ -1,0 +1,9 @@
+{
+  "version": "v1.5.3",
+  "generated_at": "2025-10-20T09:36:42.539837-03:00",
+  "files": {
+    "app/version.php": "49b08945eb0b41e6fb040cb8663c3723e567df4f5c0834295d52579036b41d26",
+    "CHANGELOG.md": "ccd9e43528d54a5068bc9cc2f052d20ebe77550fe79d407cf952c36be5b4f7bf",
+    "tools/verify_manifest.php": "4dcfca55ce4a3409478365b51abf72284dea018b282d0af2c6022a86bd61fe6a"
+  }
+}

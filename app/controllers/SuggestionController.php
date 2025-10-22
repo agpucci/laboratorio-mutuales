@@ -6,7 +6,7 @@ class SuggestionController extends Controller
 {
     public function index() {
         $items = \Models\Suggestion::recentOpen(50);
-        if (!$items) { // fallback para evitar listado en blanco si por algún motivo no coincide el estado
+        if (!$items) { // fallback para evitar listado en blanco si por algun motivo no coincide el estado
             $items = \Models\Suggestion::recentAll(50);
         }
         $this->view('suggestions/index', ['items' => $items, 'title' => 'Sugerencias']);
@@ -28,5 +28,37 @@ class SuggestionController extends Controller
         \Models\Suggestion::close($id, $status, (int)($_SESSION['user']['id'] ?? 0), $note);
         $back = $_POST['back'] ?? (\APP_URL.'/sugerencias');
         header('Location: '.$back); exit;
+    }
+
+    public function delete()
+    {
+        // Solo ADMIN
+        if (empty($_SESSION['user']) || (($_SESSION['user']['role'] ?? '') !== 'ADMIN')) {
+            http_response_code(403);
+            exit('No autorizado');
+        }
+
+        // Verificacion CSRF
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || empty($_POST['csrf_token']) || $_POST['csrf_token'] !== ($_SESSION['csrf_token'] ?? '')) {
+            http_response_code(400);
+            exit('Solicitud invalida');
+        }
+
+        // ID sugerencia
+        $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
+        if ($id <= 0) {
+            http_response_code(400);
+            exit('ID invalido');
+        }
+
+        // Eliminar (tabla mutual_suggestions)
+        try {
+            \Models\Suggestion::delete($id);
+            header('Location: ' . \APP_URL . '/sugerencias');
+            exit;
+        } catch (\Throwable $e) {
+            http_response_code(500);
+            exit('Error al eliminar: ' . htmlspecialchars($e->getMessage()));
+        }
     }
 }

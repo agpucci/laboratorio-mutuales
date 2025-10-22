@@ -75,4 +75,26 @@ class Mutual{
         $q=$pdo->prepare('UPDATE mutuales SET validada=?, updated_at=NOW() WHERE id=?');
         $q->execute([$state?1:0,$id]);
     }
+
+    // Ordenado por nombre (sin filtro)
+    public function allOrderedByName(): array
+    {
+        $sql = "SELECT * FROM mutuales ORDER BY name ASC";
+        $st = $this->pdo->query($sql);
+        return $st->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    // Búsqueda por nombre (LIKE + bind)
+    public function searchByName(string $q): array
+    {
+        $sql = "SELECT * FROM mutuales
+                WHERE name LIKE :q
+                ORDER BY name ASC";
+        $st = $this->pdo->prepare($sql);
+        $like = '%' . $q . '%';
+        $st->bindParam(':q', $like, \PDO::PARAM_STR);
+        $st->execute();
+        return $st->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
 }

@@ -6,7 +6,7 @@
   <?php endif; ?>
 </div>
 <div class="mt-2">
-  <a class="btn btn-outline-dark btn-sm" href="<?= $appUrl ?>/mutuales/recientes">Últimas modificadas</a>
+  <a class="btn btn-outline-dark btn-sm" href="<?= $appUrl ?>/mutuales/recientes">Asltimas modificadas</a>
   <a class="btn btn-outline-dark btn-sm" href="<?= $appUrl ?>/auditoria/ultimos">Log de cambios</a>
   <?php if (($_SESSION['user']['role'] ?? '') === 'ADMIN'): ?>
     <a class="btn btn-outline-dark btn-sm" href="<?= $appUrl ?>/sugerencias">Sugerencias</a>
@@ -29,7 +29,8 @@
     <tr>
       <th>ID</th>
       <th>Nombre</th>
-      <th>Validación</th>
+      <th>Validacion</th>
+      <th>Fecha modificacion</th>
       <th style="width:260px">Acciones</th>
     </tr>
   </thead>
@@ -39,6 +40,16 @@
       <td><?= (int)$m['id'] ?></td>
       <td><?= htmlspecialchars($m['name']) ?></td>
       <td><?= $m['validada'] ? '<span class="badge bg-success">Validada</span>' : '<span class="badge bg-warning text-dark">Pendiente</span>' ?></td>
+      <td>
+        <?php
+          $updatedAt = $m['updated_at'] ?? '';
+          if ($updatedAt) {
+              $ts = strtotime($updatedAt);
+              $formatted = $ts ? date('d/m/Y H:i', $ts) : $updatedAt;
+              echo htmlspecialchars($formatted);
+          }
+        ?>
+      </td>
       <td>
         <a class="btn btn-sm btn-outline-primary" href="<?= $appUrl ?>/mutuales/view?id=<?= (int)$m['id'] ?>">Ver</a>
         <?php if (($_SESSION['user']['role'] ?? '') === 'ADMIN'): ?>

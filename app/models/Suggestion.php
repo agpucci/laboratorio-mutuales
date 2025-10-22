@@ -43,4 +43,10 @@ class Suggestion {
         $q = $pdo->prepare('UPDATE mutual_suggestions SET status=?, resolver_id=?, resolver_note=?, resolved_at=NOW() WHERE id=?');
         $q->execute([$status, $resolverId, $note, $id]);
     }
+
+    public static function delete(int $id): void {
+        $pdo = DB::pdo();
+        $q = $pdo->prepare('DELETE FROM mutual_suggestions WHERE id=?');
+        $q->execute([$id]);
+    }
 }

@@ -33,7 +33,7 @@
         </span>
       </td>
       <td>
-        <?php if (($_SESSION['user']['role'] ?? '') === 'ADMIN' && $it['status']==='ABIERTA'): ?>
+        <?php if (($_SESSION['user']['role'] ?? '') === 'ADMIN'): ?>
         <form class="d-flex gap-2 flex-wrap" method="post" action="<?= $appUrl ?>/sugerencias/cerrar">
           <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf) ?>">
           <input type="hidden" name="id" value="<?= (int)$it['id'] ?>">
@@ -42,6 +42,11 @@
           <button name="status" value="RESUELTA" class="btn btn-sm btn-success">Resuelta</button>
           <button name="status" value="RECHAZADA" class="btn btn-sm btn-outline-secondary">Rechazar</button>
         </form>
+        <form class="d-inline" method="post" action="<?= $appUrl ?>/sugerencias/delete" onsubmit="return confirm('¿Eliminar sugerencia?')">
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf) ?>">
+                <input type="hidden" name="id" value="<?= (int)$it['id'] ?>">
+                <button class="btn btn-sm btn-outline-danger">Eliminar</button>
+              </form>
         <?php endif; ?>
       </td>
     </tr>
